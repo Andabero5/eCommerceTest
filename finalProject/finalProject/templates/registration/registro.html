@@ -1,0 +1,31 @@
+{% extends "registration/layout.html" %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+  <div class="col-md-auto text-white bg-dark p-5 border rounded shadow align-self-center">
+  <h3 class="text-center mb-5">Formulario de Registro</h3>
+    <div class="form-group">
+    <form method="post">
+      {% csrf_token %}
+      {% for campo in form %}
+        <p>
+          {{ campo.label_tag }}<br>
+          {{ campo }}
+          {% if campo.help_text %}
+            <small style="color: rgb(167, 167, 167)">{{ campo.help_text }}</small>
+          {% endif %}
+          {% for error in campo.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <div class="mt-5 text-center">
+      <button class='btn btn-outline-warning text-center' type="submit">Confirmar Registro</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+  
+{% endblock %}

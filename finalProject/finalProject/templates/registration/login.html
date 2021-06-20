@@ -1,0 +1,45 @@
+{% extends "registration/layout.html" %}
+
+{% block body %}
+<div class="row justify-content-center">
+  <div class="col-md-auto text-white bg-dark p-5 border rounded shadow align-self-center">
+    <h3 class="text-center mb-5">
+      Iniciar sesión
+    </h3>
+    {% if form.errors %}
+      <p>El usuario y la clave no coinciden, por favor intente nuevamente.</p>
+    {% endif %}
+    <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+      <div class="row mt-5">
+        <div class="col-4 text-end">
+        <td>Usuario: </td>
+        </div>
+        <div class="col-6">
+        <td>{{ form.username}}</td>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-4 text-end">
+        <td>Contraseña: </td>
+      </div>
+      <div class="col-6">
+        <td>{{ form.password }}</td>
+        </div>
+      </div>
+      <div class="mt-5 text-center">
+        <input class="btn btn-outline-warning" type="submit" value="ACCEDER" />
+        <input class="btn btn-outline-warning" type="hidden" name="next" value="{{ next }}" />
+      </div>
+    </form>
+    <div class="row">
+      <div class="col">
+      <p><a href="{% url 'Users:registrarse' %}">Registrarse</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

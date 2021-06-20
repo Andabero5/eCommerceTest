@@ -3,22 +3,22 @@
     <div class="row">
       {% for product in latestProducts %}
         <div class="col mt-2">
-            <div class="card text-white bg-dark shadow rounded " style="width: 18rem;">
+            <div class="card text-white bg-dark shadow rounded " style="width: 25rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">{{product}}</h5>
                   <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi ipsa eligendi earum nihil! Expedita repellat enim fugiat distinctio, quis earum aliquid porro facilis eius reiciendis! Sed, quidem. Earum, repudiandae ipsum.</p>
-                  <a href="#" class="btn btn-primary">Ver producto</a>
+                  <a href="#" class="btn btn-outline-warning">Ver producto</a>
                 </div>
               </div>
         </div>
         {%endfor%}
-        <div class="row mb-5 mt-5">
-            <div class="col border rounded shadow">
-                <h3 class="text-center mt-4">Mas productos</h3>
+        <div class="row mt-5 mb-10">
+            <div class="col rounded shadow bg-dark">
+                <h3 class="text-center mt-4 text-white">Mas productos</h3>
                 <ul>
                   {%for products in otherProducts%}
-                    <li class="mt-4">
+                    <li class="">
                         <a class="" href="#">{{products}} asdasdasdad</a>
                     </li>
                     {%endfor%}
@@ -26,5 +26,6 @@
             </div>
         </div>
     </div>
+
 
 {% endblock %}

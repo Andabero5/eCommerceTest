@@ -17,15 +17,13 @@
             </a>
             <div class="d-flex justify-content-end">
                 {% if user.is_authenticated%}
-                <p class="text-light me-4">Bienvenido: {{user.get_username.upper}}</p>
                 <a class="btn btn-outline-warning me-1" href="{% url 'logout'%}?next={{request.path}}">Cerrar sesión</a>
                 {%else%}
                 <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Login</a>
-                <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Registro</a>
+                <a class="btn btn-outline-warning me-1" href="#">Registro</a>
                 {%endif%}
-                {%if user.is_staff == False%}
+                {%if user.get_group != "moderador"%}
                     <a class="btn btn-outline-warning" href="#">Carrito</a>
-                {{user.get_group}}
                 {%endif%}
             </div>
         </div>
