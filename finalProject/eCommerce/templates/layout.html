@@ -21,7 +21,7 @@
                 <a class="btn btn-outline-warning me-1" href="{% url 'logout'%}?next={{request.path}}">Cerrar sesión</a>
                 {%else%}
                 <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Login</a>
-                <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Registro</a>
+                <a class="btn btn-outline-warning me-1" href="{% url 'Users:registrarse' %}">Registro</a>
                 {%endif%}
                 {%if user.is_staff == False%}
                     <a class="btn btn-outline-warning" href="#">Carrito</a>
@@ -42,7 +42,6 @@
             aria-controls="navbarSupportedContent" 
             aria-expanded="false" 
             aria-label="Toggle navigation">
-
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -70,9 +69,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#">Contacto</a>  
                 </li>
+                {%if user.is_staff%}
                 <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Nuevo producto</a>
+                <a class="nav-link" href="#" >Nuevo producto</a>
                 </li>
+                {%endif%}
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Nombre, categoría" aria-label="Search">
@@ -87,9 +88,8 @@
     {% endblock %}
     </div>
 
-    <footer class="footer mt-auto py-3 bg-dark text-white fixed-bottom">
-
-        <div class="container text-center">
+    <footer class="footer mt-5">
+        <div class="text-center py-3 bg-dark text-white">
             <span>
                 JAGUARETE KAA S.A ©2021 Copyright. Desarrollado por Andrés Beltrán.
             </span> 
