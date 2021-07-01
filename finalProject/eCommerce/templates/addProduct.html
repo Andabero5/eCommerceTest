@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body%}
+
+<div class="row mt-5">
+    <div class="col text-white bg-dark p-5 border rounded shadow">
+        {%if user.is_staff%}
+        <h3 class="text-warning text-center">Añadir nuevo componente</h3>
+        <div class="form-group">
+            <form method="POST" enctype="multipart/form-data">
+            {%csrf_token %}
+                {{form.as_p}}
+                <button class="btn btn-outline-warning" type="submit" value="ADD"> Agregar</button>
+            </form>
+        </div>
+        {%else%}
+        <div class="row d-flex justify-content-center  mb-3">
+                <p class="mb-5 text-center fs-5">El usuario no tiene acceso a esta página.</p>
+                <a class="btn btn-outline-warning me-1 text-center" href="{% url 'index'%}">Volver a la página de inicio.</a>
+        </div>
+        {%endif%}
+    </div>
+</div>
+
+{% endblock %}

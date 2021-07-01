@@ -8,7 +8,11 @@
                 <div class="card-body">
                   <h5 class="card-title">{{product}}</h5>
                   <p class="card-text">{{product.caracteristica}}</p>
-                  <a href="#" class="btn btn-outline-warning">Ver producto</a>
+                  {%if user.is_staff%}
+                  <a href="{% url 'product-detail' product.pk %}" class="btn btn-outline-warning">Editar producto</a>
+                  {%else%}
+                  <a href="{% url 'product-detail' product.pk %}" class="btn btn-outline-warning">Ver producto</a>
+                  {% endif%}
                 </div>
               </div>
         </div>
@@ -18,12 +22,12 @@
                 <h3 class="text-center mt-4 text-white">Mas productos</h3>
                 <div class="list-group">
                   <a href="#">{{last}}</a> 
-                  {%for products in otherProducts%}
-                  <a href="#" class="list-group-item list-group-item-action bg-dark" aria-current="true">
+                  {%for product in otherProducts%}
+                  <a href="{% url 'product-detail' product.pk %}" class="list-group-item list-group-item-action bg-dark" aria-current="true">
                     <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1 text-warning">{{products}}</h5>
+                      <h5 class="mb-1 text-warning">{{product}}</h5>
                       </div>
-                        <p class="text-white mb-1">{{products.caracteristica}}</p>
+                        <p class="text-white mb-1">{{product.caracteristica}}</p>
                     </a>
                     {%endfor%}
                 </ol>
