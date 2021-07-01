@@ -57,10 +57,10 @@
                         Categorías
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item text-white " href="#">RAM</a></li>
-                        <li><a class="dropdown-item text-white" href="#">Board</a></li>
-                        <li><a class="dropdown-item text-white" href="#">Procesador</a></li>
-                        <li><a class="dropdown-item text-white" href="#">HDD</a></li> 
+                        <li><a class="dropdown-item text-white " href="{%url 'category' 'RAM' %}">RAM</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'Board' %}">Board</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'Procesador' %}">Procesador</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'HDD' %}">HDD</a></li> 
                     </ul>
                 </li>
                 </ul>
@@ -76,8 +76,10 @@
                 </li>
                 {%endif%}
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Nombre, categoría" aria-label="Search">
+            <form class="d-flex" method="POST" action="{% url 'search-product'%}">
+                {%csrf_token%}
+
+                <input class="form-control me-2" type="search" placeholder="Nombre, categoría" aria-label="Search" name="searched">
                 <button class="btn btn-outline-warning" type="submit">Buscar</button>
             </form>
             </div>

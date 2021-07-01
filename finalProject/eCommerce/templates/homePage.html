@@ -1,34 +1,41 @@
 {% extends "layout.html" %}
 {% block body%}
     <div class="row">
-      {% for product in latestProducts %}
-        <div class="col mt-2">
-            <div class="card text-white bg-dark shadow rounded " style="width: 25rem;">
-                <img src="{{product.imagen.url}}" class="card-img-top" alt="{{product}}">
-                <div class="card-body">
-                  <h5 class="card-title">{{product}}</h5>
-                  <p class="card-text">{{product.caracteristica}}</p>
-                  {%if user.is_staff%}
-                  <a href="{% url 'product-detail' product.pk %}" class="btn btn-outline-warning">Editar producto</a>
-                  {%else%}
-                  <a href="{% url 'product-detail' product.pk %}" class="btn btn-outline-warning">Ver producto</a>
-                  {% endif%}
-                </div>
-              </div>
-        </div>
+      {% for product in object_list%}
+      {%if forloop.counter <= 3%}
+      <div class="col mt-2">
+        <div class="card text-white bg-dark shadow rounded " style="width: 25rem;">
+            <img src="{{product.imagen.url}}" class="card-img-top" alt="{{product}}">
+            <div class="card-body">
+              <h5 class="card-title">{{product}}</h5>
+              <p class="card-text">{{product.caracteristica}}</p>
+              {%if user.is_staff%}
+              <a href="{% url 'update-product' product.pk %}" class="btn btn-outline-warning">Editar producto</a>
+              {%else%}
+              <a href="{% url 'product-detail' product.pk %}" class="btn btn-outline-warning">Ver producto</a>
+              {% endif%}
+            </div>
+          </div>
+    </div>
+      {%endif %}
         {%endfor%}
         <div class="row mt-5 mb-10">
             <div class="col rounded shadow bg-dark">
                 <h3 class="text-center mt-4 text-white">Mas productos</h3>
                 <div class="list-group">
-                  <a href="#">{{last}}</a> 
-                  {%for product in otherProducts%}
+                  {%for product in object_list%}
+                  {%if forloop.counter > 3 and forloop.counter <= 10%}
+                  {%if user.is_staff%}
+                  <a href="{% url 'update-product' product.pk %}" class="list-group-item list-group-item-action bg-dark" aria-current="true">
+                  {%else%}
                   <a href="{% url 'product-detail' product.pk %}" class="list-group-item list-group-item-action bg-dark" aria-current="true">
+                  {%endif%}
                     <div class="d-flex w-100 justify-content-between">
                       <h5 class="mb-1 text-warning">{{product}}</h5>
                       </div>
                         <p class="text-white mb-1">{{product.caracteristica}}</p>
                     </a>
+                    {% endif%}
                     {%endfor%}
                 </ol>
                 </div>
