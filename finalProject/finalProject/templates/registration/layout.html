@@ -12,21 +12,22 @@
 <body class="d-flex flex-column min-vh-100">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    
     <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"> 
+            <a class="navbar-brand" href="{%url 'index'%}"> 
                 <img src= "https://i2.wp.com/www.opengis.ch/wp-content/uploads/2020/04/django-python-logo-e1588009010920.png?resize=300%2C240&ssl=1" width="50px">
             </a>
             <div class="d-flex justify-content-end">
                 {% if user.is_authenticated%}
+                <p class="text-light me-4">Bienvenido: {{user.get_username.upper}}</p>
                 <a class="btn btn-outline-warning me-1" href="{% url 'logout'%}?next={{request.path}}">Cerrar sesión</a>
                 {%else%}
                 <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Login</a>
                 <a class="btn btn-outline-warning me-1" href="{% url 'Users:registrarse' %}">Registro</a>
                 {%endif%}
-                {%if user.get_group != "moderador"%}
+                {%if user.is_staff == False%}
                     <a class="btn btn-outline-warning" href="#">Carrito</a>
+                {{user.get_group}}
                 {%endif%}
             </div>
         </div>
@@ -34,7 +35,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">JAGUARETE</a>
+            <a class="navbar-brand" href="{%url 'index'%}">JAGUARETE</a>
             
             <button class="navbar-toggler" 
             type="button" 
@@ -43,55 +44,52 @@
             aria-controls="navbarSupportedContent" 
             aria-expanded="false" 
             aria-label="Toggle navigation">
-
             <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="nav-item collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="{%url 'index'%}">Home</a>
                 </li>
-                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Categorías
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item text-white " href="#">RAM</a></li>
-                            <li><a class="dropdown-item text-white" href="#">Board</a></li>
-                            <li><a class="dropdown-item text-white" href="#">Procesador</a></li>
-                            <li><a class="dropdown-item text-white" href="#">HDD</a></li>
-                        
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categorías
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item text-white " href="{%url 'category' 'RAM' %}">RAM</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'Board' %}">Board</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'Procesador' %}">Procesador</a></li>
+                        <li><a class="dropdown-item text-white" href="{%url 'category' 'HDD' %}">HDD</a></li> 
                     </ul>
                 </li>
                 </ul>
-                </div>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#">Acerca de...</a>  
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" href="#">Contacto</a>  
                 </li>
+                {%if user.is_staff%}
                 <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Nuevo producto</a>
+                <a class="nav-link" href="{% url 'add-product'%}" >Nuevo producto</a>
                 </li>
+                {%endif%}
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Nombre, categoría" aria-label="Search">
+            <form class="d-flex" method="POST" action="{% url 'search-product'%}">
+                {%csrf_token%}
+
+                <input class="form-control me-2" type="search" placeholder="Nombre, categoría" aria-label="Search" name="searched">
                 <button class="btn btn-outline-warning" type="submit">Buscar</button>
             </form>
             </div>
         </div>
         </nav>
-        
-    <main class="flex-grow-1">
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
     {% block body%}
 
     {% endblock %}
     </div>
-    </main>
 
     <footer class="footer mt-auto">
         <div class="text-center py-3 bg-dark text-white">

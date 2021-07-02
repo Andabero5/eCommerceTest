@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body%}
+{%if user.is_authenticated%}
+<div class="row mt-5">
+    <div class="col text-white bg-dark p-5 border rounded shadow">
+        {% if cart.productocarrito_set.all%}
+        <table class="table text-white">
+            <thead>
+                <h3 class="text-warning text-center mb-5">Carrito de compras de {{user.username}}</h3>
+                <tr>
+                    <th>SN</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>subtotal</th>
+                    <th>accion</th>
+                </tr>
+                <tbody>
+                    {% for cp in  cart.productocarrito_set.all%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{cp.producto.nombre}}</td>
+                            <td>{{cp.precio}}</td>
+                            <td>{{cp.cantidad}}</td>
+                            <td>{{cp.subtotal}}</td>
+                            <td>
+                                <a class="ms-auto btn btn-success me-1" href="{% url 'manage-cart' cp.id %}?action=inc">+</a>
+                                <a class="ms-auto btn btn-warning me-1" href="{% url 'manage-cart' cp.id %}?action=dec">-</a>
+                                <a class="ms-auto btn btn-danger me-1" href="{% url 'manage-cart' cp.id %}?action=rmv">X</a>
+                            </td>
+                        </tr>
+                    {%endfor %}
+                    <th colspan='4' class = 'text-rigth'>Total</th>
+                    <th>US ${{cart.total}}</th>
+                    {% if cart.productocarrito_set.all%}
+                    <th><a class="ms-auto btn btn-outline-danger me-1" href="{% url 'empty-cart' %}?action=rmv">Vaciar</a></th>
+                    {%endif %}
+                </tbody>
+            </thead>
+        </table>
+        {%else%}
+        <h3 class="text-warning text-center">No hay productos en el carrito</h3>
+        {%endif%}
+    </div>
+</div>
+{%else%}
+<div class="row justify-content-center">
+<div class="col-5 text-white bg-dark p-5 border rounded shadow text-center">
+    <h3 class="mb-5">El usuario no se encuentra Logeado.</h3>
+    <a class="btn btn-outline-warning me-1" href="{% url 'login'%}?next={{request.path}}">Iniciar sesión</a>    
+</div>
+</div>
+{%endif%}
+{% endblock %}

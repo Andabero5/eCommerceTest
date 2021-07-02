@@ -15,7 +15,7 @@
                     <p  class="ms-auto fs-4 text-success">${{componente.precio}}</p>
             </div>
             <div class="d-flex  mb-3">
-                <button class="btn btn-outline-warning ms-auto" type="submit">Añadir al carrito</button>
+                <a class="ms-auto btn btn-outline-warning me-1" href="{%url 'add-to-cart' componente.id %}">Añadir al carrito</a>
             </div>
         </div>
 </div>

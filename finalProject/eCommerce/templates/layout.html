@@ -26,7 +26,7 @@
                 <a class="btn btn-outline-warning me-1" href="{% url 'Users:registrarse' %}">Registro</a>
                 {%endif%}
                 {%if user.is_staff == False%}
-                    <a class="btn btn-outline-warning" href="#">Carrito</a>
+                    <a class="btn btn-outline-warning" href="{% url 'cart' %}">Carrito</a>
                 {{user.get_group}}
                 {%endif%}
             </div>
@@ -65,10 +65,10 @@
                 </li>
                 </ul>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#">Acerca de...</a>  
+                    <a class="nav-link" href="{%url 'about-us' %}">Acerca de...</a>  
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" href="#">Contacto</a>  
+                    <a class="nav-link" href="{%url 'contact' %}">Contacto</a>  
                 </li>
                 {%if user.is_staff%}
                 <li class="nav-item">
